@@ -7,27 +7,27 @@ const port = 4041;
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-const users = [{name: 'Tony', email: 'tony@mail.com'}]
+const users = require('./MOCK_DATA.json');
 
 app.get('/', (_, res) => {
     res.send('wooooo');
 });
 
 app.get('/users', (_, res) => {
-    res.json({ok: true, users});
+    res.json({users});
 });
 
-app.get('/user/:name', (req, res) => {
-    const {name} =req.params;
-    const user = users.filter((user) => user.name === name)[0];
-    res.json({ok: true, user});
+app.get('/user/:id', (req, res) => {
+    const {id} = req.params;
+    const user = users.filter((user) => user.id === 1 * id)[0];
+    res.json({user});
 });
 
 app.post('/adduser', (req, res) => {
-    const {name, email} = req.body;
-        if(name && email) {
-            users.push({name, email});
-            res.json({ok: true, users});
+    const {id, first_name, last_name, email, gender, ip_address} = req.body;
+        if(id && first_name && last_name && email && gender && ip_address) {
+            users.push({id, first_name, last_name, email, gender, ip_address});
+            res.json({users});
         }
 });
 
